@@ -1,17 +1,1 @@
-#define _CRT_SECURE_NO_WARNINGS //��scanf�������ò�����
-//#pragma warning(disable:4996)
-#pragma warning(disable:6031)//���þ�����ʾ:" C6031 ����ֵ�����ԣ�"scanf" "
-#include <stdio.h>
-int main()
-{
-	int ascii[] = { 73,32,99,97,110,32,100,111,32,105,116,33 };
-	int i=0;
-	int sz = sizeof(ascii) / sizeof(ascii[0]);
-	for (i=0 ;i <=sz  ; i++)
-	{
-		printf("%c\n", ascii[i]);
-	}
- 
-	return 0;
-	
-}
+﻿#define _CRT_SECURE_NO_WARNINGS //让scanf函数可用不报错 //#pragma warning(disable:4996) #pragma warning(disable:6031)//禁用警告提示:" C6031 返回值被忽略："scanf" " #include <stdio.h> //int sum(int a) //{ //	int c = 0; //	static int b = 3; //	c += 1; //	b += 2; //	return (a + b + c); //}   int main() {  	//int ascii[] = { 73,32,99,97,110,32,100,111,32,105,116,33 }; 	//int i=0; 	//int sz = sizeof(ascii) / sizeof(ascii[0]); 	//for (i=0 ;i <=sz  ; i++) 	//{ 	//	printf("%c\n", ascii[i]); 	//}  	//int ascii[] = { 73,32,99,97,110,32,100,111,32,105,116,33 }; 	//int i=0; 	//int sz = sizeof(ascii) / sizeof(ascii[0]); 	//for (i=0 ;i <=sz  ; i++) 	//{ 	//	printf("%c\n", ascii[i]); 	//}    	//long int birth = 0; 	//start: 	////输入一个人的出生日期(年月日) :20020109 	//scanf("%d", & birth); 	//int y = birth / 10000; 	//int m = (birth % 10000) / 100; 	//int d = birth % 100; 	//int y, m, d = 0; 	//scanf("%4d%2d%2d", &y, &m, &d); 	//if (1990 <= y && 2015 >= y && 1 <= m && 12 >= m && 1 <= d && 30 >= d) 	//	printf("year=%d\nmonth=%02d\ndate=%02d\n", y, m, d ); 	////else goto start;  	//int n = printf("hello world!"); 	//printf("\n%d\n", n);   	//int i; 	//int a = 2; 	//for (i = 0; i < 5; i++) 	//{ 	//	printf("%d,", sum(a)); 	//}  	//printf("printf(\"hello world !\\n\")");//使用转义字符   	//int a, b, c, d = 0; 	//scanf("%d %d %d %d", &a, &b, &c, &d); 	//if (a < b) 	//	a = b; 	////a = a; 	//if (a < c)	 	//	a = c; 	////a = a; 	//if (a < d) 	//	a = d; 	////a = a; 	//printf("%d", a);  	return 0; 	 }
