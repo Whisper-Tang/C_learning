@@ -18,5 +18,8 @@
     <ClCompile Include="learn_09_19_01.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="learn_09_19_02.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
