@@ -102,3 +102,56 @@ bool UpsetSqList(SqList* L)
 	//free(p);											//释放P处空间
 	return true;										//逆置完成
 }
+
+//对长度为n的顺序表L，编写一个时间复杂度为O(n)、空间复杂度为O(1)的算法，该算法删除顺序表中所有值为x的数据元素。
+bool DeletElemX(SqList* L, int x)
+{
+	if (L->length == 0)							//判断是否为空表
+		return false;
+	int k = 0;									//定义k记录需要被删除的x数量，用以移动x后的元素
+	for (int i = 0; i < L->length; i++)				
+	{
+		if (L->data[i] = x)						//每找到一个x，其后元素需要额外向前移动1次
+			k++;								
+		else
+			L->data[i - k] = L->data[i];		//非x元素迁移
+	}
+	L->length -= k;								//删除后顺序表表长缩短k
+	return true;
+}
+
+//从顺序表中删除其值在给定值s和t之间(包含s和t，要求s<t)的所有元素，若s或t不合理或顺序表为空，则显示出错信息并退出运行。
+bool DeletAmongS_T(SqList *L, int s, int t)
+{
+	if (s >= t || 0 == L->length)				//判断s,t是否合法或顺序表是否为空
+		return true;
+	int k = 0;									//记录需要保留的元素个数
+	for (int i = 0; i < L->length; i++)
+	{
+		if (L->data[i]<s || L->data[i]>t)		//判断是否需要保留
+		{
+			L->data[k] = L->data[i];			//保留无需删除的元素
+			k++;								//保留元素数+1
+		}
+	}
+	L->length = k;								//顺序表长为保留下来的元素数
+	return true;
+}
+
+//从有序顺序表中删除所有其值重复的元素，使表中所有元素的值均不同。
+bool DeletSameElem(SqList* L)	//有序表的相同元素均相邻
+{
+	if (0 == L->length)
+		return false;
+	int k = 0;									//记录需要删除的元素个数
+	for (int i = 1; i < L->length; i++)			//有序顺序表，默认第一个元素前无与之相同元素，从第二位开始检索
+	{
+		if (L->data[i] == L->data[i - 1])		//从第二位开始检索该元素是否与前一个元素相同
+			k++;								//与前一个元素相同，则需要删除的元素+1
+		else
+			L->data[i - k] = L->data[i];		//与前一个元素不同则向前移动当前意需要删除的元素数
+	}
+	L->length -= k;								//表长缩短k
+	return true;
+}
+
