@@ -57,11 +57,6 @@ int Fx(int x)
 
 }
 
-
-
-
-
-
 //int F(int x)
 //{
 //	x = x + 1;
