@@ -35,9 +35,13 @@ bool IsertNextSqlist(SqList *L,int i,int x)
 {
 	if (i < 0 || i > L->length || L->length == MaxSize)//i=0时为第一个位置插入；i=表长时为在最末尾插入；表满时无法插入
 		return false;			
-	for (int k=0; k <= L->length - 1 - i; k++)	////将顺序表从末尾开始依次向后移动一位，直到第i+1（下标为i）个元素，
+	//for (int k=0; k <= L->length - 1 - i; k++)	////将顺序表从末尾开始依次向后移动一位，直到第i+1（下标为i）个元素，
+	//{
+	//	L->data[L->length-k] = L->data[L->length - 1 - k];	//将顺序表从末尾开始依次向后移动一位，直到第i+1个元素，
+	//}
+	for (int k = L->length - 1; k >= i; k--)	////将顺序表从末尾开始依次向后移动一位，直到第i+1（下标为i）个元素，
 	{
-		L->data[L->length-k] = L->data[L->length - 1 - k];	//将顺序表从末尾开始依次向后移动一位，直到第i+1个元素，
+		L->data[k+1] = L->data[k];	//将顺序表从末尾开始依次向后移动一位，直到第i+1个元素，
 	}
 	L->data[i] = x;
 	L->length += 1;
@@ -124,7 +128,7 @@ bool findx(SqList *L,int x)
 //	
 
 
-
+//测试上述函数是否工作
 int main()
 {
 	SqList L;
