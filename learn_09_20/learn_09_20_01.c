@@ -1,6 +1,6 @@
-﻿//#define _CRT_SECURE_NO_WARNINGS //让scanf函数可用不报错
-////#pragma warning(disable:4996)
-//#pragma warning(disable:6031)//禁用警告提示:" C6031 返回值被忽略："scanf" "#
+﻿#define _CRT_SECURE_NO_WARNINGS //让scanf函数可用不报错
+//#pragma warning(disable:4996)
+#pragma warning(disable:6031)//禁用警告提示:" C6031 返回值被忽略："scanf" "#
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -46,68 +46,6 @@ bool IsertNextSqlist(SqList *L,int i,int x)
 	L->data[i] = x;
 	L->length += 1;
 	return true;
-}
-
-//2.查找数值为x的元素，若找到返回其为第n个元素，若找不到则n为最接近x的数
-bool SeachElem(SqList L, int x ,int *n)
-{	
-	if (0 == L.length)
-		return false;
-	int mid = 0, left = 0;
-	int right = L.length - 1;
-	while (left <= right)							//二分查找
-	{
-		mid = left + (right - left) / 2;
-		if (L.data[mid] < x)	//中间的数比x小，x在右边。
-		{
-			left = mid + 1;		//移动左指针到右边
-		}
-		else if (L.data[mid] > x)	//中间的数比x小，x在左边。
-		{
-			right = mid - 1;	//移动右指针到左边
-		}
-		else
-		{
-			*n = mid + 1;	//输出x位置
-			return true;
-		}
-
-	}
-	*n = mid + 1;		//输出接近x的位置
-	return false;
-}
-
-//3.找到若找到，则将其与后继元素位置相交换，
-//若找不到，则将其插入表中并使表中元素仍递增有序。
-bool findx(SqList* L, int x)
-{
-	if (L->length == 0)
-		return false;
-	int n = 0;
-	if (SeachElem(*L, x, &n))	//找到若找到,，则将其与后继元素位置相交换，
-	{
-		if (n = L->length) return true;	//若x为最后一个元素，则无需交换。
-		int k = L->data[n - 1];
-		L->data[n - 1] = L->data[n];
-		L->data[n] = k;
-		return true;
-	}
-	else ////若找不到，则将其插入表中并使表中元素仍递增有序。
-	{
-		if (L->data[n - 1] < x)	//最相近x的元素（位置n）若比x小，x应插入到他(位置n)之后
-		{
-			IsertNextSqlist(L, n, x);	//引用后插函数，在n位后插入
-			return true;
-		}
-		else if (L->data[n - 1] > x)	//最相近x的元素（位置n）若比x大，x应插入到他前驱(位置n-1)之后
-		{
-			IsertNextSqlist(L, n - 1, x);	////引用后插函数，在n-1位后插入
-			return true;
-
-		}
-		else return false;
-	}
-
 }
 
 
@@ -286,7 +224,7 @@ int FindMid(int A[], int B[],int n)
 int FindMin(int A[], int n)
 {
 	
-	/*int min = 0;
+	int min = 0;
 	int B[] = {0};
 	for (int i = 0; i <= n; i++)
 	{
@@ -302,12 +240,12 @@ int FindMin(int A[], int n)
 		if (B[i] == 0)
 			return i + 1;
 	}
-	return n + 1;*/
+	return n + 1;
 }
 
 
 // 函数用于找出数组中的最小缺失正整数
-int FindMinGPT(int A[], int n) 
+int FindMin(int A[], int n) 
 {
 	// 进行原地哈希，使得每个 A[i] 处于它应该在的位置 A[i] - 1
 	for (int i = 0; i < n; i++) 
@@ -351,81 +289,16 @@ int FindMinGPT(int A[], int n)
 //
 //	return 0;
 //}
+//
 
 
 
-//从ABC中各取一个数，组成三元数组，
-//所有三元数组中两两之间距离之和最小为多少？对应三元数组为？
-
-//计算绝对值
-int Abs(int a)
-{
-	/*if (a < 0)
-		return -a;
-	else return a;*/
-	return a < 0 ? -a : a;
-}
-
-// 寻找最小的三元组距离和
-int min_a_b_c(int A[], int B[], int C[], int a, int b, int c, int D[])
-{
-	int i, j, k, d, min_D;
-	i = j = k = d = 0;
-	// 初始化最小距离
-	min_D = Abs(A[i] - B[j]) + Abs(B[j] - C[k]) + Abs(C[k] - A[i]);
-
-	// 遍历三个数组，更新最小距离
-	while(i<a && j<b && k<c)
-	{
-		d = Abs(A[i] - B[j]) + Abs(B[j] - C[k]) + Abs(C[k] - A[i]);
-
-		// 更新最小距离
-		if (d < min_D)
-		{
-			min_D = d;
-			D[0] = A[i];
-			D[1] = B[j];
-			D[2] = C[k];
-		}
-			
-		
-		// 根据当前数值大小，移动对应的指针
-		if (A[i] < B[j])
-			if (A[i] < C[k])	//A<B,A<C,更新A
-				i++;
-			else k++;	//C<=A<B,更新C
-		else if (B[j] < C[k])	//B<=A,B<C,更新B
-			j++;
-		else k++;	//C<=B<=A,更新C
-	}
-	return min_D;
-}
-
-// 测试函数
-int main()
-{
-	int A[] = { 1, 4, 10 };
-	int B[] = { 2, 15, 20 };
-	int C[] = { 10, 12 };
-
-	int a = sizeof(A) / sizeof(A[0]);
-	int b = sizeof(B) / sizeof(B[0]);
-	int c = sizeof(C) / sizeof(C[0]);
-
-	int D[3] = { 0,0,0 };
-	int min_D = min_a_b_c(A, B, C, a, b, c, D);
-
-	printf("最小三元数组距离和为：%d\n", min_D);
-	printf("对应三元数组为：{ %d，%d，%d }\n", D[0],D[1],D[2]);
-
-	return 0;
-}
 
 
-//int main()
-//{
-//	return 0;
-//}
+
+
+
+
 
 
 

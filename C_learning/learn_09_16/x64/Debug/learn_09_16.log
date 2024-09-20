@@ -1,4 +1,2 @@
-﻿E:\Microsoft Visual Studio\2022\Enterprise\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: 中间目录(x64\Debug\)包含从另一个项目(learn_09_16.vcxproj)共享的文件。   这会导致错误的清除和重新生成行为。
-  learin_09_17.c
-MSVCRTD.lib(exe_main.obj) : error LNK2019: 无法解析的外部符号 main，函数 "int __cdecl invoke_main(void)" (?invoke_main@@YAHXZ) 中引用了该符号
-C:\Users\WhisperTang\Documents\VS Code\C_learning\C_learning\x64\Debug\learn_09_17.exe : fatal error LNK1120: 1 个无法解析的外部命令
+﻿  learin_09_17.c
+  learn_09_16.vcxproj -> C:\Users\WhisperTang\Documents\VS Code\C_learning\C_learning\x64\Debug\learn_09_16.exe
