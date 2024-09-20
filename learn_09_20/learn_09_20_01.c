@@ -353,7 +353,72 @@ int FindMin(int A[], int n)
 //
 
 
+//从ABC中各取一个数，组成三元数组，
+//所有三元数组中两两之间距离之和最小为多少？对应三元数组为？
 
+//计算绝对值
+int Abs(int a)
+{
+	/*if (a < 0)
+		return -a;
+	else return a;*/
+	return a < 0 ? -a : a;
+}
+
+// 寻找最小的三元组距离和
+int min_a_b_c(int A[], int B[], int C[], int a, int b, int c, int D[])
+{
+	int i, j, k, d, min_D;
+	i = j = k = d = 0;
+	// 初始化最小距离
+	min_D = Abs(A[i] - B[j]) + Abs(B[j] - C[k]) + Abs(C[k] - A[i]);
+
+	// 遍历三个数组，更新最小距离
+	while (i < a && j < b && k < c)
+	{
+		d = Abs(A[i] - B[j]) + Abs(B[j] - C[k]) + Abs(C[k] - A[i]);
+
+		// 更新最小距离
+		if (d < min_D)
+		{
+			min_D = d;
+			D[0] = A[i];
+			D[1] = B[j];
+			D[2] = C[k];
+		}
+
+
+		// 根据当前数值大小，移动对应的指针
+		if (A[i] < B[j])
+			if (A[i] < C[k])	//A<B,A<C,更新A
+				i++;
+			else k++;	//C<=A<B,更新C
+		else if (B[j] < C[k])	//B<=A,B<C,更新B
+			j++;
+		else k++;	//C<=B<=A,更新C
+	}
+	return min_D;
+}
+
+// 测试函数
+int main()
+{
+	int A[] = { 1, 4, 10 };
+	int B[] = { 2, 15, 20 };
+	int C[] = { 10, 12 };
+
+	int a = sizeof(A) / sizeof(A[0]);
+	int b = sizeof(B) / sizeof(B[0]);
+	int c = sizeof(C) / sizeof(C[0]);
+
+	int D[3] = { 0,0,0 };
+	int min_D = min_a_b_c(A, B, C, a, b, c, D);
+
+	printf("最小三元数组距离和为：%d\n", min_D);
+	printf("对应三元数组为：{ %d，%d，%d }\n", D[0], D[1], D[2]);
+
+	return 0;
+}
 
 
 
