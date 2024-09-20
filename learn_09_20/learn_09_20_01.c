@@ -80,8 +80,9 @@ bool findx(SqList *L,int x)
 	if (L->length == 0)
 		return false;
 	int n = 0;
-	if (SeachElem(*L, x, &n))	//找到若找到，则将其与后继元素位置相交换，
+	if (SeachElem(*L, x, &n))	//找到若找到,，则将其与后继元素位置相交换，
 	{
+		if (n = L->length) return true;	//若x为最后一个元素，则无需交换。
 		int k = L->data[n-1];
 		L->data[n-1] = L->data[n];
 		L->data[n] = k;
