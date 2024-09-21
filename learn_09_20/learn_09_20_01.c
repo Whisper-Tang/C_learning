@@ -306,7 +306,7 @@ int FindMin(int A[], int n)
 
 
 // 函数用于找出数组中的最小缺失正整数
-int FindMin(int A[], int n) 
+int FindMinGPT(int A[], int n) 
 {
 	// 进行原地哈希，使得每个 A[i] 处于它应该在的位置 A[i] - 1
 	for (int i = 0; i < n; i++) 
