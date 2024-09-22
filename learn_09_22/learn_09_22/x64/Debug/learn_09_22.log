@@ -1,0 +1,4 @@
+﻿  learn_09_22_01.c
+C:\Users\WhisperTang\Documents\VS Code\C_learning\learn_09_22\learn_09_22_01.c(353,12): warning C4047: “初始化”:“LinkList *”与“LNode *”的间接级别不同
+C:\Users\WhisperTang\Documents\VS Code\C_learning\learn_09_22\learn_09_22_01.c(362,1): warning C4716: “SameList”: 必须返回一个值
+  learn_09_22.vcxproj -> C:\Users\WhisperTang\Documents\VS Code\C_learning\learn_09_22\x64\Debug\learn_09_22.exe
