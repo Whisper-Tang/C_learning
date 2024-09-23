@@ -352,6 +352,9 @@ LinkList SameList(LinkList A, LinkList B)
 	//	return false;
 	//创建并初始化表C （前文已有定义 typedef struct LNode* LinkList）
 	LinkList C = (LNode*)malloc(sizeof(LNode));
+	if (C == NULL) 
+		return NULL;//表示空间不足
+
 	C->next = NULL;
 
 	//定义表C尾指针c
@@ -371,6 +374,7 @@ LinkList SameList(LinkList A, LinkList B)
 		else//相等则记录在表c中
 		{
 			c->next=(LNode*)malloc(sizeof(LNode));	//申请新节点并连接到表c
+			if (c->next == NULL) return NULL;//表示空间不足
 			c = c->next;	//移动到新节点
 			c->data = a->data;	//存入数据
 			c->next = NULL;	//置空尾节点指针域
@@ -382,6 +386,464 @@ LinkList SameList(LinkList A, LinkList B)
 	}
 	return C;
 }
+
+//已知两个链表A和B分别表示两个集合，其元素递增排列。
+// 编制函数，求A与B的交集，并存放于A链表中。
+
+bool SameA(LinkList* A, LinkList* B)
+{
+	if (*A == NULL || *B == NULL)
+		return true;
+
+	//两个指针a,b同时扫描链表AB
+	LNode* a = (*A)->next;
+	LNode* b = (*B)->next;
+	//定义a的前驱节点指针prior，也结果链表A的尾指针
+	LNode* prior = *A;
+
+	//如果有一个表扫描完毕，停止扫描
+	while (a != NULL && b != NULL)
+	{
+		//若相同则保留a，然后a向后移动
+		if (a->data == b->data)
+		{
+			a = a->next;
+			//b = b->next;
+		}
+
+		//若不同，b小则b向后扫描，
+		else if (a->data > b->data)
+		{
+			b = b->next;
+		}
+		//a小则删除a，
+		else
+		{
+			prior->next = a->next;	//绕过a节点
+			free(a);	//删除释放空间
+			a = prior->next;	//a移动到新的节点
+		}		
+	}//while
+
+	//下方代码功能已被后续while循环包括，故做注释处理
+	//////a扫描完毕，则直接输出
+	////if (a = NULL)
+	////	return true;
+	////若b先扫描完毕，则删除a，置空尾节点指针域
+	//else
+	//	free(a);
+	//prior->next = NULL;
+	//上述原代码方案不能做到删除a剩余所有元素		
+
+	//删除a剩余所有元素
+	while (a != NULL)
+	{
+		prior->next = a->next;
+		free(a);
+		a = prior->next;
+	}
+	return true;
+}
+//上述方案并未对表B做处理，如需删除可添加删除操作（没扫描一个b释放一个节点）
+//最后释放未扫描完的B表，释放B的头节点
+
+
+//设计一个算法用于判断带头结点的双链表是否对称。
+bool MirrorTF(DLinkList* A)
+{
+	//空表判断(空表也对称，滑稽)
+	if (*A == NULL || (*A)->next == NULL)
+		return true;
+
+	//定义前指针，指向第一个元素
+	DNode* f = (*A)->next;
+	//定义尾指针,并移动到A的尾节点
+	DNode* l = *A;
+
+	while (l->next != NULL)
+	{
+		l = l->next;
+	}
+	
+	//当 f 和 l 相遇或交叉时（即 f == l 或 f->prior == l），说明链表已扫描一半且对称。
+	while(f != l && f->prior != l)
+	{
+		if (f->data == l->data)
+		{
+			f = f->next;
+			l = l->prior;
+		}
+		else return false;//有不相等的则返回不对称
+	}
+	//全部相等则对称
+	return true;
+}
+
+
+
+//有两个循环单链表，链表头指针分别为h1和 h2，
+// 编写一个函数将链表h2链接到链表h1之后，
+// 要求链接后的链表仍保持循环链表形式。
+
+
+bool DumpAB(LinkList*h1, LinkList* h2)
+{
+	//错误参数判断
+	if (*h1 == NULL || *h2 == NULL)
+		return false;
+			
+	//定义指针p
+	LNode* p = *h1;
+	//从h1开始扫描到h1尾节点
+	while (p->next != *h1)
+		p = p->next;
+
+	p->next = (*h2)->next;//链接h1的尾节点到h2头节点后第一个节点
+
+	//开始继续向后扫描到h2尾节点
+	while (p->next != *h2)
+		p = p->next;
+
+	p->next = *h1;	//链接h2尾节点到h1头节点
+
+	free(*h2); //释放h2头节点
+
+	return true;
+
+}
+
+
+//设有一个带头结点的非循环双链表工，
+// 其每个结点中除有pre、 data和next域外，
+// 还有一个访问频度域freq,其值均初始化为零。
+// 每当在链表中进行一次Locate(L,x)运算时，令值为x的结点中freq域的值增1，
+// 并使此链表中的结点保持按访问频度递减的顺序排列，
+// 且最近访问的结点排在频度相同的结点之前，以便使频繁访问的结点总是靠近表头。
+// 试编写符合上述要求的Locate(L,z)函数，返回找到结点的地址，类型为指针
+
+typedef struct FDNode
+{
+	struct FDNode* pre;
+	int data;
+	int freq;
+	struct FDNode* next;
+}FDNode, *FDLinkList;
+
+
+
+FDLinkList Locate(FDLinkList *L, int z)
+{
+	//空表判断
+	if (*L == NULL || (*L)->next == NULL)
+		return NULL;	//表示没有找到z所在节点
+		
+	//定义扫描指针
+	FDNode* q= (*L)->next;
+	int i = 0;	//z记录频度
+	FDNode* p = *L;
+
+	//只有一个元素
+	if (q->next == NULL)
+	{
+		if (q->data == z)
+		{
+			q->freq++;
+			return q;
+		}
+		else return NULL; //找不到
+	}
+
+	//不止一个元素
+	//先让所有值为Z的节点频度+1
+	while (p->next != NULL)
+	{
+		//Z的节点频度 + 1,并用i记录
+		if (p->next->data == z)
+		{
+			i = ++(p->next->freq);
+			p = p->next;//下一个待处理的节点
+		}		
+	}
+	//若找到z则i至少为1，若i为0则直接返回
+	if (i == 0)
+		return NULL;//若i为0则直接返回，表示没找到z
+
+	//对L中所有节点按照frep进行排序
+	//分析，因为每次访问，所有数据为z的值都一起加一，并按要求进行排序
+	//所以只需将本次访问的z对应的节点，统一移动到最后一个大于其频度的节点之后即可
+
+	//从最后一个节点向前扫描，找到到数第一个频度大于z的节点,并让p指向它
+	while (p != *L)
+	{
+		if (p->freq > i)
+			break;
+		p = p->pre;
+	}
+	//跳出循环时，p指向它最后一个频度大于z的节点或者指向头节点
+	
+	//指针q开始遍历链表，找到z并将其移动到p之后；
+	while (q!= NULL)
+	{
+		//指针q找到z节点；
+		if (q->data == z)
+		{
+			//这不是尾节点
+			if (q->next != NULL)
+			{
+				FDNode* temp = q->next;//暂存后续节点
+
+				//断开p的连接，并保证原表连续
+				q->pre->next = temp;
+				temp->pre = q->pre;
+
+				if (p->next == NULL)
+					break;//p->next不会等于NULL，但是VS报警警告
+				//将q（z节点）移动到p之后
+				q->pre = p;
+				q->next = p->next;
+				p->next->pre = q;
+				p->next = q;
+
+				q = temp;	//q回到下一个扫描节点
+			}
+			//该z节点为尾节点
+			else
+			{
+				q->pre->next = NULL;	//前驱成为新尾节点，置空其后指针域
+
+
+				if (p->next == NULL)
+					break;//p->next不会等于NULL，但是VS报警警告
+				//将q（z节点）移动到p之后
+				q->pre = p;
+				q->next = p->next;
+				p->next->pre = q;
+				p->next = q;
+			}
+					
+		}
+	}
+	return p->next;//z的地址在p之后
+}
+
+
+
+
+//设将n(n>1 )个整数存放到不带头结点的单链表L中，
+// 设计算法将L中保存的序列循环右移k(0<k<n)个位置。
+// 例如，若k=1，则将链表{0,1,2,3}变为{3,0,1,2}。
+bool Move(LinkList* L, int n,int k)
+{
+	//参数合理性判断，不合理则结束并返回错误
+	if (*L==NULL||n > 1 || k <= 0 || k >= n)
+		return false;
+
+	//工作指针p
+	LNode* p = *L;
+
+	//只需将表尾巴k个元素集体移动到第一个元素之前即可；
+	for (int i = 1; i < n - k; i++)
+	{
+		p = p->next;
+	}
+	//q标记结果链表的尾节点，
+	LNode* q = p;
+	//l标记结果链表的首节点，
+	LNode* l = p->next;
+	//继续移动p到当前链表尾节点
+	while (p->next != NULL)
+		p = p->next;
+
+	p->next = *L;	//形成环
+	*L = l;		//更新头指针
+	q->next = NULL;	//断开尾节点并置空指针域
+	return true;
+}
+//上述方法时间复杂度为O(n)
+//法二
+bool Movek(LinkList* L, int n, int k)
+{
+	//参数合理性判断，不合理则结束并返回错误
+	if (*L == NULL || n > 1 || k <= 0 || k >= n)
+		return false;
+
+	//定义工作指针p并移动为尾指针
+	LNode* p = *L;
+	while (p->next != *L)
+		p = p->next;
+
+	p->next = *L; //形成循环单链表
+
+	//移动到断开位置
+	for (int i = 1; i <= n - k; i++)
+		p = p->next;
+
+	//更新头指针，并断开尾指针、置空尾指针指针域形成新的非循环单链表
+	*L = p->next;
+	p->next = NULL;
+
+	return true;
+
+}
+
+
+//单链表有环，是指单链表的最后一个结点的指针指向了链表中的某个结点
+//试编写算法判断单链表是否存在环。
+// 
+//有环true；无环false；
+bool RoundTF(LinkList* L)
+{
+	//空表天然无环
+	if (*L == NULL || (*L)->next == NULL)
+		return false;
+
+	//定义两个指针，fast每向后移动两次，slow向后移动一次；
+	LNode* slow = *L;
+	LNode* fast = slow->next;
+	int i = 0;
+
+	//如果又任意指针指向NULL则显然无环
+	//while (fast != NULL&& slow !=NULL )
+	while(fast != NULL && fast->next != NULL)
+	{
+		//如果fast和slow相等，
+		// 则说明fast在环中已比slow多走了一圈，
+		if (fast == slow)
+			return true;	//// 故有环
+
+		// slow 每次走一步
+		slow = slow->next;
+		// fast 每次走两步
+		fast = fast->next->next;
+		////fast移动一次，i计数一次
+		//fast = fast->next;
+		//i++;
+		//if (i = 2)//i计数为2时，代表fast移动两次，此时slow移动一次并重新计数
+		//{
+		//	slow = slow->next;
+		//	i = 0;
+		//}
+	}
+	return false;//任意指针指向NULL则显然无环
+
+}
+
+//设有一个长度n(n为偶数)的不带头结点的单链表，且结点值都大于0，
+//设计算法求这个单链表的最大孪生和。
+//孪生和:定义为一个结点值与其孪生结点值之和，
+//对于第i个结点(从О开始)，其孪生结点为第n - i - 1个结点。
+
+
+
+
+
+
+//17.假设该链表只给出了头指针list。在不改变链表的前提下，
+// 请设计一个尽可能高效的算法，查找链表中倒数第k个位置上的结点(k为正整数)。
+// 若查找成功，算法输出该结点的data域的值，并返回l;否则，只返回0.
+
+int GetK(LinkList* list, int k, int k_data)
+{
+	//空表判断
+	if (*list == NULL)
+		return 0;
+
+	LNode* p = *list;
+	int n = 0;
+
+	//遍历链表统计节点个数
+	while (p->next != NULL)
+	{
+		n++;
+		p = p->next;
+	}
+
+	//k比n大则找不到
+	if (k > n)
+		return 0;
+	//if (k == n)
+	//{
+	//	k_data = (*list)->data;	//输出data值
+	//	return 1;	//返回1
+	//}
+
+	p = *list;
+	//找到到数k节点，即第n-k+1个节点
+	for (int i = 1; i <= n - k + 1; i++)
+	{
+		if(p->next!=NULL)
+			p = p->next;
+	}
+
+	k_data = (p)->data;	//输出data值
+	return 1;	//返回1
+}
+
+//方法二
+int Get_K(LinkList* list, int k)
+{
+	//空表判断
+	if (*list == NULL)
+		return 0;
+
+	//定义工作指针
+	LNode* p = *list;
+	LNode* q = *list;
+	//n表示q指针指向，从p开始到数第n个节点，
+	int n = 1;
+
+	//p从开始扫描到末尾
+	while (p->next != NULL)
+	{
+		//从n等于k开始，每次q跟着移动
+		if (n >= k)
+			q = q->next;
+		n++;
+		p = p->next;
+	}
+
+	//若q还是指向头指针，表示p未移动，链表节点个数不足k
+	if (q == *list)//与if (n <= k)等价
+	{
+		return 0;
+	}
+
+	//p即为到数第k个节点
+	printf("%d", q->data);
+	return 1;
+}
+
+//请设计一个时间上尽可能高效的算法，
+// 找出由A和B所指向两个链表共同后缀的起始位置。
+
+LNode* SanmePartStart(LinkList* A, LinkList* B)
+{
+	// 如果任一链表为空，直接返回 NULL
+	if (*A == NULL || *B == NULL) return NULL;
+
+	//定义工作指针a，b指向A和B的头节点
+	LNode* a = *A;
+	LNode* b = *B;
+
+	//a,b一起向后遍历，循环直到两个指针相遇
+	while (a == b)	//如果AB有公共部分，ab会在同时指向NULL前，先指向公共链的起始节点
+	{
+		//当 a 到达链表末尾时，重置为链表 B 的头
+		a == NULL ? (a = *B) : (a = a->next);
+		//当 b 到达链表末尾时，重置为链表 A 的头
+		b == NULL ? (b = *A) : (b = b->next);
+	}
+	// 返回相遇的节点，或 NULL（表示无公共链）
+	return  a == NULL ? NULL : a;
+}
+
+
+
+
+//16
+//19
+//20
+
 
 
 
