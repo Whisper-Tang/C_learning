@@ -289,7 +289,7 @@ LNode* SanmePartStart(LinkList* A, LinkList* B)
 
 bool DeletSameAbsolute(LinkList* L,int n)
 {
-
+#define AbsoluteMAX_n 8//仅让下文的数组创建时不报错，实际n(AbsoluteMAX_n)为题目中的绝对值最大值，而不是10
 	//空表天然满足条件
 	if (*L == NULL || (*L)->next == NULL)
 		return true;
@@ -298,9 +298,12 @@ bool DeletSameAbsolute(LinkList* L,int n)
 	LNode* q = *L;
 	LNode* p = q->next;
 
-	// 创建并初始化记录数组
-	int* save = (int*)malloc((n + 1) * sizeof(int));
-	for (int i = 0; i <= n; i++)
+	//// 创建并初始化记录数组
+	//int* save = (int*)malloc((n + 1) * sizeof(int));
+	//for (int i = 0; i <= n; i++)
+	//	save[i] = 0;
+	int save[AbsoluteMAX_n+1];
+	for (int i = 0; i <= AbsoluteMAX_n; i++)
 		save[i] = 0;
 
 	//遍历链表
@@ -337,3 +340,7 @@ bool DeletSameAbsolute(LinkList* L,int n)
 //20 设线性表L=(a1,a2,,a3,…",an-2,an-1,an,)采用带头结点的单链表保存，
 //请设计一个空间复杂度为O(1)且时间上尽可能高效的算法，
 // 重新排列L中的各结点，得到线性表L'=(a1,an-1,a2,,an-2,a3,an-3,…)。
+int main()
+{
+	return 0;
+}
