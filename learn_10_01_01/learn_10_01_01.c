@@ -73,4 +73,5 @@ bool MirroEmpty(LinkList L, int n)
 int main()
 {
 	return 0;
+
 }
