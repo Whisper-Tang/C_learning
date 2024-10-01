@@ -43,6 +43,7 @@ bool PopSqStack(SqStack* S, ElemType* x)
 {
 	if (S->top == S->base || S->base == NULL)
 		return false;
+
 	*x = *--S->top;
 	return true;
 }
