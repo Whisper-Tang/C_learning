@@ -12,18 +12,20 @@ int main()
 	BiTree root=NULL;
 	InitBiTree(&root);
 
-	root = CreatNewBiTNode('a');
-	printf(" %c \n", root->value);
-	root->lchild= CreatNewBiTNode('b');
-	printf("%c ", root->lchild->value);
-	root->rchild = CreatNewBiTNode('c');
-	printf(" %c\n", root->rchild->value);
+	CreatBiTree(&root);	//先序遍历顺序创建二叉链表，测试序列 ABC##DE#G##F###
+
+	//root = CreatNewBiTNode('a');
+	//printf(" %c \n", root->value);
+	//root->lchild= CreatNewBiTNode('b');
+	//printf("%c ", root->lchild->value);
+	//root->rchild = CreatNewBiTNode('c');
+	//printf(" %c\n", root->rchild->value);
 
 	//InOrderBiTree(root);
 
 	//printf("\n");
 
-	InOrderTreverse(root);
+	PreOrderTreverse(root); //先序输出
 
 	return 0;
 }

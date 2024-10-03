@@ -142,4 +142,4 @@ bool LinkQueueLength(LinkQueue Q, int *len)
 		*len++;
 	}
 	return true;
-}
+}0

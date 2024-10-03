@@ -130,3 +130,25 @@ bool PostOrderTreverse(BiTree T)
 //	return true;
 //}
 
+//创建一颗二叉树（二叉链表）
+bool CreatBiTree(BiTree* T)
+{
+	char c;
+	scanf("%c", &c);
+	if (c == '#')
+	{
+		(*T) = NULL;
+		return true;
+	}
+	else
+	{
+		(*T)= (BiTNode*)malloc(sizeof(BiTNode));
+		if ((*T) == NULL)
+			return false;
+
+		(*T)->value = c;
+		CreatBiTree(&(*T)->lchild);
+		CreatBiTree(&(*T)->rchild);
+	}
+	return true;
+}

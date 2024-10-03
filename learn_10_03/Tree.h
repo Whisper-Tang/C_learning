@@ -42,6 +42,7 @@ bool PostOrderTreverse(BiTree T);//后序遍历二叉树（递归）
 
 //bool InOrderBiTree(BiTree T);//中序遍历二叉树，非递归
 
-
+//创建一颗二叉树（二叉链表）
+bool CreatBiTree(BiTree* T);
 
 
