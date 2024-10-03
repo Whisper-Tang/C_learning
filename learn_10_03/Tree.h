@@ -32,9 +32,16 @@ bool InitBiTree(BiTree* T);
 //创建新结点
 BiTNode* CreatNewBiTNode(ElemType value);
 
+//访问并打印结点
+void visit(ElemType a);
+
+//二叉树的遍历
+bool InOrderTreverse(BiTree T);//中序遍历二叉树（递归）
+bool PreOrderTreverse(BiTree T);//先序遍历二叉树（递归）
+bool PostOrderTreverse(BiTree T);//后序遍历二叉树（递归）
+
+//bool InOrderBiTree(BiTree T);//中序遍历二叉树，非递归
 
 
-//遍历二叉树（中序遍历）
-bool InOrderTreverse(BiTree T);
-//中序遍历二叉树，非递归
-bool InOrderBiTree(BiTree T);
+
+

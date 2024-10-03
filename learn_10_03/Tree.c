@@ -54,6 +54,7 @@ BiTNode* CreatNewBiTNode(ElemType value)
 	return NULL;
 }
 
+//访问并打印结点值
 void visit(ElemType a)
 {
 	printf("%c ", a);
@@ -72,6 +73,34 @@ bool InOrderTreverse(BiTree T)
 
 	return	true;
 }
+
+//先序遍历二叉树（递归）
+bool PreOrderTreverse(BiTree T)
+{
+	if (T == NULL)
+		return true;
+
+	visit(T->value);
+	PreOrderTreverse(T->lchild);
+	PreOrderTreverse(T->rchild);
+
+	return	true;
+}
+
+//后序遍历二叉树（递归）
+bool PostOrderTreverse(BiTree T)
+{
+	if (T == NULL)
+		return true;
+
+	PostOrderTreverse(T->lchild);
+	PostOrderTreverse(T->rchild);
+	visit(T->value);
+
+	return	true;
+}
+
+
 
 ////中序遍历二叉树，非递归
 //bool InOrderBiTree(BiTree T)
