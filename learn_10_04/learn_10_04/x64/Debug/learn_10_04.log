@@ -1,0 +1,16 @@
+﻿  learn_10_04.c
+C:\Users\WhisperTang\Documents\VS Code\C_learning\learn_10_04\learn_10_04.c(33,23): warning C4047: “函数”:“int *”与“int **”的间接级别不同
+C:\Users\WhisperTang\Documents\VS Code\C_learning\learn_10_04\learn_10_04.c(33,23): warning C4024: “PreOrder”: 形参和实参 2 的类型不同
+C:\Users\WhisperTang\Documents\VS Code\C_learning\learn_10_04\learn_10_04.c(33,30): warning C4047: “函数”:“int *”与“int **”的间接级别不同
+C:\Users\WhisperTang\Documents\VS Code\C_learning\learn_10_04\learn_10_04.c(33,30): warning C4024: “PreOrder”: 形参和实参 4 的类型不同
+C:\Users\WhisperTang\Documents\VS Code\C_learning\learn_10_04\learn_10_04.c(34,23): warning C4047: “函数”:“int *”与“int **”的间接级别不同
+C:\Users\WhisperTang\Documents\VS Code\C_learning\learn_10_04\learn_10_04.c(34,23): warning C4024: “PreOrder”: 形参和实参 2 的类型不同
+C:\Users\WhisperTang\Documents\VS Code\C_learning\learn_10_04\learn_10_04.c(34,30): warning C4047: “函数”:“int *”与“int **”的间接级别不同
+C:\Users\WhisperTang\Documents\VS Code\C_learning\learn_10_04\learn_10_04.c(34,30): warning C4024: “PreOrder”: 形参和实参 4 的类型不同
+C:\Users\WhisperTang\Documents\VS Code\C_learning\learn_10_04\learn_10_04.c(118,12): warning C4047: “函数”:“BiTree”与“BiTNode **”的间接级别不同
+C:\Users\WhisperTang\Documents\VS Code\C_learning\learn_10_04\learn_10_04.c(118,12): warning C4024: “PrePrint”: 形参和实参 1 的类型不同
+C:\Users\WhisperTang\Documents\VS Code\C_learning\learn_10_04\learn_10_04.c(119,12): warning C4047: “函数”:“BiTree”与“BiTNode **”的间接级别不同
+C:\Users\WhisperTang\Documents\VS Code\C_learning\learn_10_04\learn_10_04.c(119,12): warning C4024: “PrePrint”: 形参和实参 1 的类型不同
+C:\Users\WhisperTang\Documents\VS Code\C_learning\learn_10_04\learn_10_04.c(130,11): warning C4047: “函数”:“BiTree”与“BiTree *”的间接级别不同
+C:\Users\WhisperTang\Documents\VS Code\C_learning\learn_10_04\learn_10_04.c(130,11): warning C4024: “PrePrint”: 形参和实参 1 的类型不同
+  learn_10_04.vcxproj -> C:\Users\WhisperTang\Documents\VS Code\C_learning\learn_10_04\x64\Debug\learn_10_04.exe
